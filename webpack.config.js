@@ -1,9 +1,10 @@
 const path = require('path');
-const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const baseConfig = {
+const isProduction = process.env.NODE_ENV === 'production';
+
+const config = {
     entry: path.resolve(__dirname, './src/index.js'),
     mode: 'development',
     module: {
@@ -35,9 +36,11 @@ const baseConfig = {
     ],
 };
 
-module.exports = ({ mode }) => {
-    const isProductionMode = mode === 'prod';
-    const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
-
-    return merge(baseConfig, envConfig);
+module.exports = () => {
+    if (isProduction) {
+        config.mode = 'production';
+    } else {
+        config.mode = 'development';
+    }
+    return config;
 };
