@@ -1,21 +1,24 @@
+import Utils from '../../utils';
+import { SourceItem } from '../../types/SourceItem';
 import './sources.css';
 
-interface SourceData {
-    id: number;
-    name: string;
+enum SelectorNames {
+    ItemName = '.source__item-name',
+    Item = '.source__item',
 }
 class Sources {
-    draw(data: SourceData[]) {
+    draw(data: SourceItem[]) {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
 
         data.forEach((item) => {
-            const sourceClone = sourceItemTemp?.content.cloneNode(true);
+            const sourceClone = sourceItemTemp?.content.cloneNode(true) as HTMLElement;
+            if (sourceClone) {
+                Utils.setTextContent(sourceClone, SelectorNames.ItemName, item.name);
+                Utils.setAttribute(sourceClone, SelectorNames.Item, 'data-source-id', item.id);
 
-            sourceClone.querySelector('.source__item-name').textContent = item.name;
-            sourceClone.querySelector('.source__item').setAttribute('data-source-id', item.id);
-
-            fragment.append(sourceClone);
+                fragment.append(sourceClone);
+            }
         });
         const sourceElement = document.querySelector('.sources');
         if (sourceElement !== null) {

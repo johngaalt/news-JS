@@ -1,4 +1,5 @@
 import { NewsItem } from '../../types/NewsItem';
+import Utils from '../../utils';
 import './news.css';
 
 enum NewsChildElements {
@@ -13,29 +14,6 @@ enum NewsChildElements {
 }
 
 class News {
-    public setTextContent(parent: HTMLElement, selector: string, value: string): void {
-        const element: HTMLElement | null = parent.querySelector(selector);
-
-        if (element) {
-            element.textContent = value;
-        }
-    }
-
-    setBackgroundImage(parent: HTMLElement, selector: string, value: string): void {
-        const element: HTMLElement | null = parent.querySelector(selector);
-
-        if (element) {
-            element.style.backgroundImage = value;
-        }
-    }
-
-    public setAttribute(parent: HTMLElement, selector: string, value: string): void {
-        const element: HTMLElement | null = parent.querySelector(selector);
-        if (element) {
-            element.setAttribute('href', value);
-        }
-    }
-
     draw(data: NewsItem[]) {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
@@ -48,22 +26,22 @@ class News {
 
                 if (idx % 2) newsClone.querySelector('.news__item')?.classList.add('alt');
 
-                this.setBackgroundImage(
+                Utils.setBackgroundImage(
                     newsClone,
                     NewsChildElements.Photo,
                     `url(${item.urlToImage || 'img/news_placeholder.jpg'})`
                 );
 
-                this.setTextContent(newsClone, NewsChildElements.Author, item.author || item.source.name);
-                this.setTextContent(
+                Utils.setTextContent(newsClone, NewsChildElements.Author, item.author || item.source.name);
+                Utils.setTextContent(
                     newsClone,
                     NewsChildElements.Date,
                     item.publishedAt.slice(0, 10).split('-').reverse().join('-')
                 );
-                this.setTextContent(newsClone, NewsChildElements.Title, item.title);
-                this.setTextContent(newsClone, NewsChildElements.Source, item.source.name);
-                this.setTextContent(newsClone, NewsChildElements.Content, item.description);
-                this.setAttribute(newsClone, NewsChildElements.ReadMore, item.url);
+                Utils.setTextContent(newsClone, NewsChildElements.Title, item.title);
+                Utils.setTextContent(newsClone, NewsChildElements.Source, item.source.name);
+                Utils.setTextContent(newsClone, NewsChildElements.Content, item.description);
+                Utils.setAttribute(newsClone, NewsChildElements.ReadMore, 'href', item.url);
 
                 fragment.append(newsClone);
             }
