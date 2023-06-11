@@ -1,3 +1,5 @@
+import { CallbackFunction } from '../types/CallbackFunction';
+
 interface LoaderOptions {
     apiKey: string;
 }
@@ -14,7 +16,7 @@ interface RequestParams {
 interface ILoader {
     baseLink: string;
     options: LoaderOptions;
-    getResp: (params: RequestParams, callback?: () => void) => void;
+    getResp: (params: RequestParams, callback?: CallbackFunction) => void;
     errorHandler: (res: Response) => Response;
     makeUrl: (options: RequestOptions, endpoint: string) => void;
     load: (method: string, endpoint: string, callback: (data: unknown) => void, options: RequestOptions) => void;
@@ -31,14 +33,14 @@ class Loader implements ILoader {
 
     getResp(
         { endpoint, options = {} }: RequestParams,
-        callback = () => {
+        callback: CallbackFunction = () => {
             console.error('No callback for GET response');
         }
     ): void {
         this.load('GET', endpoint, callback, options);
     }
 
-    errorHandler(res: Response): Response {
+    errorHandler(res: Response): never | Response {
         if (!res.ok) {
             if (res.status === 401 || res.status === 404)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);

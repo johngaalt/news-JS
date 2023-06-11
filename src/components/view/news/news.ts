@@ -1,37 +1,78 @@
+import { NewsItem } from '../../types/NewsItem';
 import './news.css';
 
+enum NewsChildElements {
+    Item = '.news__item',
+    Photo = '.news__meta-photo',
+    Author = '.news__meta-author',
+    Date = '.news__meta-date',
+    Title = '.news__description-title',
+    Source = '.news__description-source',
+    Content = '.news__description-content',
+    ReadMore = '.news__read-more a',
+}
+
 class News {
-    draw(data) {
+    public setTextContent(parent: HTMLElement, selector: string, value: string): void {
+        const element: HTMLElement | null = parent.querySelector(selector);
+
+        if (element) {
+            element.textContent = value;
+        }
+    }
+
+    setBackgroundImage(parent: HTMLElement, selector: string, value: string): void {
+        const element: HTMLElement | null = parent.querySelector(selector);
+
+        if (element) {
+            element.style.backgroundImage = value;
+        }
+    }
+
+    public setAttribute(parent: HTMLElement, selector: string, value: string): void {
+        const element: HTMLElement | null = parent.querySelector(selector);
+        if (element) {
+            element.setAttribute('href', value);
+        }
+    }
+
+    draw(data: NewsItem[]) {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();
         const newsItemTemp = document.querySelector('#newsItemTemp');
 
         news.forEach((item, idx) => {
-            const newsClone = newsItemTemp.content.cloneNode(true);
+            if (newsItemTemp && newsItemTemp instanceof HTMLTemplateElement) {
+                const newsClone = newsItemTemp.content.cloneNode(true) as HTMLElement;
 
-            if (idx % 2) newsClone.querySelector('.news__item').classList.add('alt');
+                if (idx % 2) newsClone.querySelector('.news__item')?.classList.add('alt');
 
-            newsClone.querySelector('.news__meta-photo').style.backgroundImage = `url(${
-                item.urlToImage || 'img/news_placeholder.jpg'
-            })`;
-            newsClone.querySelector('.news__meta-author').textContent = item.author || item.source.name;
-            newsClone.querySelector('.news__meta-date').textContent = item.publishedAt
-                .slice(0, 10)
-                .split('-')
-                .reverse()
-                .join('-');
+                this.setBackgroundImage(
+                    newsClone,
+                    NewsChildElements.Photo,
+                    `url(${item.urlToImage || 'img/news_placeholder.jpg'})`
+                );
 
-            newsClone.querySelector('.news__description-title').textContent = item.title;
-            newsClone.querySelector('.news__description-source').textContent = item.source.name;
-            newsClone.querySelector('.news__description-content').textContent = item.description;
-            newsClone.querySelector('.news__read-more a').setAttribute('href', item.url);
+                this.setTextContent(newsClone, NewsChildElements.Author, item.author || item.source.name);
+                this.setTextContent(
+                    newsClone,
+                    NewsChildElements.Date,
+                    item.publishedAt.slice(0, 10).split('-').reverse().join('-')
+                );
+                this.setTextContent(newsClone, NewsChildElements.Title, item.title);
+                this.setTextContent(newsClone, NewsChildElements.Source, item.source.name);
+                this.setTextContent(newsClone, NewsChildElements.Content, item.description);
+                this.setAttribute(newsClone, NewsChildElements.ReadMore, item.url);
 
-            fragment.append(newsClone);
+                fragment.append(newsClone);
+            }
         });
-
-        document.querySelector('.news').innerHTML = '';
-        document.querySelector('.news').appendChild(fragment);
+        const newsElement = document.querySelector('.news');
+        if (newsElement !== null) {
+            newsElement.innerHTML = '';
+            newsElement.appendChild(fragment);
+        }
     }
 }
 
