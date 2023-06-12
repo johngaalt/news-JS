@@ -2,7 +2,7 @@
 
 body {
     color: #fff;
-    background: #b0aaa9;
+    background: #A6A6A3;
     font-family: sans-serif;
 }
 
@@ -23,8 +23,16 @@ header {
 }
 
 header h1 {
-    font-size: 40px;
+    font-size: 45px;
     font-weight: 800;
+
+    @include for-tablet {
+        font-size: 40px;
+    }
+
+    @include for-mobile {
+        font-size: 36px;
+    }
 }
 
 footer {
