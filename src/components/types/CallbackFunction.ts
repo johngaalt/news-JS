@@ -1,1 +1,1 @@
-export type CallbackFunction = <T>(t: T) => void;
+export type CallbackFunction<T extends object> = (...arg: T[]) => void;

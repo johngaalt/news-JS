@@ -1,7 +1,10 @@
+import { CallbackFunction } from '../types/CallbackFunction';
+import { NewsResponse } from '../types/NewsResponse';
+import { SourceResponse } from '../types/SourceResponse';
 import AppLoader from './appLoader';
 
 class AppController extends AppLoader {
-    getSources(callback: (...args: any[]) => void): void {
+    getSources(callback: CallbackFunction<SourceResponse>): void {
         super.getResp(
             {
                 endpoint: 'sources',
@@ -10,8 +13,7 @@ class AppController extends AppLoader {
         );
     }
 
-    // TODO: fix any type
-    getNews(e: Event, callback: (...args: any[]) => void): void {
+    getNews(e: Event, callback: CallbackFunction<NewsResponse>): void {
         let target = e.target;
         const newsContainer = e.currentTarget;
 

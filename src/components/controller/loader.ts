@@ -16,7 +16,7 @@ interface RequestParams {
 interface ILoader {
     baseLink: string;
     options: LoaderOptions;
-    getResp: (params: RequestParams, callback?: CallbackFunction) => void;
+    getResp: <T extends object>(params: RequestParams, callback?: CallbackFunction<T>) => void;
     errorHandler: (res: Response) => Response;
     makeUrl: (options: RequestOptions, endpoint: string) => void;
     load: (method: string, endpoint: string, callback: (data: unknown) => void, options: RequestOptions) => void;
@@ -31,9 +31,9 @@ class Loader implements ILoader {
         this.options = options;
     }
 
-    getResp(
+    getResp<T extends object>(
         { endpoint, options = {} }: RequestParams,
-        callback: CallbackFunction = () => {
+        callback: CallbackFunction<T> = () => {
             console.error('No callback for GET response');
         }
     ): void {
@@ -61,7 +61,12 @@ class Loader implements ILoader {
         return url.slice(0, -1);
     }
 
-    load(method: string, endpoint: string, callback: (data: unknown) => void, options: RequestOptions = {}) {
+    load<T extends object>(
+        method: string,
+        endpoint: string,
+        callback: CallbackFunction<T>,
+        options: RequestOptions = {}
+    ) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
