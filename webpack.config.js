@@ -26,7 +26,7 @@ const config = {
     },
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -36,7 +36,7 @@ const config = {
         new CleanWebpackPlugin(),
         new ESLintPlugin({
             extensions: ['js', 'ts'],
-          }),
+        }),
     ],
 };
 

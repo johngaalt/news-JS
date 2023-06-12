@@ -5,12 +5,12 @@
     "main": "webpack.base.config.js",
     "scripts": {
         "start": "webpack serve --open --config ./webpack.config.js --env mode=dev",
-        "build": "webpack --config ./webpack.config.js --env mode=prod",
+        "build": "webpack --mode=production",
         "lint": "eslint . --ext .ts",
         "fix": "eslint --fix",
         "watch": "webpack --watch",
         "serve": "webpack serve",
-        "deploy": "gh-pages -d dist -e migration-newsJS",
+        "deploy": "gh-pages -d dist -e migration",
         "dev": "webpack-dev-server --hot"
     },
     "repository": {

@@ -7,7 +7,7 @@ enum SelectorNames {
     Item = '.source__item',
 }
 class Sources {
-    draw(data: SourceItem[]) {
+    draw(data: SourceItem[]): void {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
 

@@ -12,7 +12,7 @@ class App {
         this.view = new AppView();
     }
 
-    start() {
+    start(): void {
         const sourcesElement = document.querySelector('.sources');
 
         if (sourcesElement) {

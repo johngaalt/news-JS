@@ -14,7 +14,7 @@ enum NewsChildElements {
 }
 
 class News {
-    draw(data: NewsItem[]) {
+    draw(data: NewsItem[]): void {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();
@@ -24,7 +24,7 @@ class News {
             if (newsItemTemp && newsItemTemp instanceof HTMLTemplateElement) {
                 const newsClone = newsItemTemp.content.cloneNode(true) as HTMLElement;
 
-                if (idx % 2) newsClone.querySelector('.news__item')?.classList.add('alt');
+                if (idx % 2) newsClone.querySelector(NewsChildElements.Item)?.classList.add('alt');
 
                 Utils.setBackgroundImage(
                     newsClone,
