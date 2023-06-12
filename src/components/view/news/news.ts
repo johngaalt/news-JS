@@ -1,6 +1,6 @@
 import { NewsItem } from '../../types/NewsItem';
 import Utils from '../../utils';
-import './news.css';
+import './news.scss';
 
 enum NewsChildElements {
     Item = '.news__item',

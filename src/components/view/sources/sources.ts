@@ -1,6 +1,6 @@
 import Utils from '../../utils';
 import { SourceItem } from '../../types/SourceItem';
-import './sources.css';
+import './sources.scss';
 
 enum SelectorNames {
     ItemName = '.source__item-name',
