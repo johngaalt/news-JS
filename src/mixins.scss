@@ -1,0 +1,37 @@
+$breakpoint-mobile: 500px; // 320px
+$breakpoint-tablet: 860px; // 768px
+$breakpoint-desktop: 1280px; // 1280px
+
+
+@mixin for-mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+
+
+@mixin for-tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin for-desktop {
+  @media (min-width: $breakpoint-small-desktop) {
+    @content;
+  }
+}
+
+@mixin inner-section($padding) {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: $padding;
+}
+
+@mixin background-options($background-color) {
+  background: $background-color;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
