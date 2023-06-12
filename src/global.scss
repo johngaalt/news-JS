@@ -1,7 +1,21 @@
+@import './mixins.scss';
+
 body {
     color: #fff;
-    background: #17181c;
+    background: #b0aaa9;
     font-family: sans-serif;
+}
+
+ul,
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #444;
 }
 
 header {
@@ -14,22 +28,71 @@ header h1 {
 }
 
 footer {
-    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    width: 50%;
+
+    a {
+        transition: 0.5s;
+    }
+
+    @include for-tablet {
+        width: 70%;
+        font-size: 16px;
+    }
+
+    @include for-mobile {
+        width: 90%;
+        font-size: 14px;
+    }
+
+    .github a:hover {
+        color: white;
+    }
+
+    .logo {
+        width: 100px;
+        
+
+        @include for-tablet {
+            width: 60px;
+        }
+
+        @include for-mobile {
+            width: 50px;
+        }
+    }
+
+    .logo:hover {
+        transform: scale(1.05);
+    }
+
+    .year {
+        color: #444;
+    }
+}
+
 footer .copyright {
-    font-size: 14px;
     color: #333;
     text-align: center;
 }
+
 footer .copyright a {
     color: #444;
 }
-footer .copyright a:hover {
-    color: #555;
+
+footer .container a:hover {
+    color: white;
 }
+
 footer .copyright:before {
     content: '©';
 }

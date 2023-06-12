@@ -28,6 +28,7 @@ const config = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
+    devtool: 'inline-source-map',
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
